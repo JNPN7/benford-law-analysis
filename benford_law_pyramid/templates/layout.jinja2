@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{request.locale_name}}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="benford law tester">
+    <meta name="author" content="someone">
+
+    <title>Benford</title>
+
+    <link href="{{request.static_url('benford_law_pyramid:static/bootstrap.css')}}" rel="stylesheet">
+    <link href="{{request.static_url('benford_law_pyramid:static/theme.css')}}" rel="stylesheet">
+  </head>
+
+  <body>
+    {% block content %}
+      <p>No content</p>
+    {% endblock content %}
+
+    <script src="{{request.static_url('benford_law_pyramid:static/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{request.static_url('benford_law_pyramid:static/bootstrap.js')}}"></script>
+  </body>
+</html>

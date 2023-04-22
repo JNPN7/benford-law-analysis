@@ -1,0 +1,42 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+    <div class="container d-flex h-75 mt-5">
+        <div class="row justify-content-center align-self-center welcome">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form action="/benford" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="form-label" for="csvFile">Upload CSV</label>
+                    <input type="file" class="form-control" id="csvFile" name="csvFile" /> 
+                </div>
+                <div style="height: 8px"></div>
+                <button type="submit" class="btn btn-primary">Check</button>
+            </form>
+            <div style="height: 15px"></div>
+
+            {% if message %}
+                <h4> {{ message }} </h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for num, prob in distribution.items() %}
+                            <tr>
+                                <th scope="row">{{ num }}</th>
+                                <td>{{ prob }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
