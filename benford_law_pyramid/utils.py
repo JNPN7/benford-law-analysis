@@ -20,21 +20,21 @@ def get_data_distribution(filepath):
         if isnumeric(k):
             if int(k) > 0:
                 filtered_dict[k] = leading_digits_dict[k]
-    probability_dict = {k: filtered_dict[k]/sum(filtered_dict.values()) for k in filtered_dict.keys()}
+    probability_dict = {int(k): filtered_dict[k]/sum(filtered_dict.values()) for k in filtered_dict.keys()}
     return probability_dict
 
 
 def check_benford_law(filepath):
-    benford_distribution = {str(k): np.log10(1+(1/k)) for k in range(1,10)}
+    benford_distribution = {k: np.log10(1+(1/k)) for k in range(1,10)}
     observed_distribution = get_data_distribution(filepath)
     
-    # checking key order
-    benford_key_order = list(benford_distribution.keys()) 
-    observed_key_order = list(observed_distribution.keys())
-    if benford_key_order == observed_key_order:
-        return True 
-    else:
-        # checking if the highest value is of 1 or not
-        observed_max_key = max(observed_distribution,key=observed_distribution.get)
-        benford_max_key = max(benford_distribution,key=benford_distribution.get)
-        return True if observed_max_key == benford_max_key else False
+    # chi square test
+    threshold_chi_square = 15.15 # for level of significane 0.05 and no of classes 9
+    calculated_chi_square = 0
+    for i in range(1, 10):
+        calculated_chi_square += ((observed_distribution[i] - benford_distribution[i])**2 / benford_distribution[i]) * 100
+
+    if calculated_chi_square > threshold_chi_square:
+        return False
+    
+    return True
